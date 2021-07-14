@@ -106,7 +106,11 @@ class FileOfflineStore(OfflineStore):
                 created_timestamp_column = feature_view.input.created_timestamp_column
 
                 # Read offline parquet data in pyarrow format
+<<<<<<< HEAD
                 filesystem, path = FileOfflineStore.__prepare_path(
+=======
+                filesystem, path = FileSource.prepare_path(
+>>>>>>> s3supportandResis/feature/filesource_s3
                     feature_view.input.path,
                     feature_view.input.file_options.s3_endpoint_override,
                 )
@@ -230,7 +234,11 @@ class FileOfflineStore(OfflineStore):
 
         # Create lazy function that is only called from the RetrievalJob object
         def evaluate_offline_job():
+<<<<<<< HEAD
             filesystem, path = FileOfflineStore.__prepare_path(
+=======
+            filesystem, path = FileSource.prepare_path(
+>>>>>>> s3supportandResis/feature/filesource_s3
                 data_source.path, data_source.file_options.s3_endpoint_override
             )
             source_df = pd.read_parquet(path, filesystem=filesystem)
