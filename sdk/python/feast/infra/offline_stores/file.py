@@ -6,7 +6,8 @@ import pyarrow
 import pytz
 from pydantic.typing import Literal
 
-from feast.data_source import DataSource, FileSource
+from feast import FileSource
+from feast.data_source import DataSource
 from feast.errors import FeastJoinKeysDuringMaterialization
 from feast.feature_view import FeatureView
 from feast.infra.offline_stores.offline_store import OfflineStore, RetrievalJob

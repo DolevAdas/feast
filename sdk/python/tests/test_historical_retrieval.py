@@ -14,8 +14,7 @@ from pandas.testing import assert_frame_equal
 from pytz import utc
 
 import feast.driver_test_data as driver_data
-from feast import RepoConfig, errors, utils
-from feast.data_source import BigQuerySource, FileSource
+from feast import BigQuerySource, FileSource, RepoConfig, errors, utils
 from feast.entity import Entity
 from feast.errors import FeatureNameCollisionError
 from feast.feature import Feature
@@ -605,7 +604,7 @@ def test_timestamp_bound_inference_from_entity_df_using_bigquery():
         start_date, infer_event_timestamp_col=True
     )
 
-    table_id = "foo.table_id"
+    table_id = f"foo.table_id_{int(time.time_ns())}_{random.randint(1000, 9999)}"
     stage_orders_bigquery(entity_df, table_id)
 
     client = bigquery.Client()
