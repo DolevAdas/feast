@@ -22,6 +22,16 @@ class EntityNotFoundException(FeastObjectNotFoundException):
             super().__init__(f"Entity {name} does not exist")
 
 
+class FeatureServiceNotFoundException(FeastObjectNotFoundException):
+    def __init__(self, name, project=None):
+        if project:
+            super().__init__(
+                f"Feature service {name} does not exist in project {project}"
+            )
+        else:
+            super().__init__(f"Feature service {name} does not exist")
+
+
 class FeatureViewNotFoundException(FeastObjectNotFoundException):
     def __init__(self, name, project=None):
         if project:
@@ -157,6 +167,11 @@ class RegistryInferenceFailure(Exception):
         )
 
 
+class BigQueryJobStillRunning(Exception):
+    def __init__(self, job_id):
+        super().__init__(f"The BigQuery job with ID '{job_id}' is still running.")
+
+
 class BigQueryJobCancelled(Exception):
     def __init__(self, job_id):
         super().__init__(f"The BigQuery job with ID '{job_id}' was cancelled")
@@ -170,3 +185,18 @@ class RedshiftCredentialsError(Exception):
 class RedshiftQueryError(Exception):
     def __init__(self, details):
         super().__init__(f"Redshift SQL Query failed to finish. Details: {details}")
+
+
+class EntityTimestampInferenceException(Exception):
+    def __init__(self, expected_column_name: str):
+        super().__init__(
+            f"Please provide an entity_df with a column named {expected_column_name} representing the time of events."
+        )
+
+
+class InvalidEntityType(Exception):
+    def __init__(self, entity_type: type):
+        super().__init__(
+            f"The entity dataframe you have provided must be a Pandas DataFrame or a SQL query, "
+            f"but we found: {entity_type} "
+        )

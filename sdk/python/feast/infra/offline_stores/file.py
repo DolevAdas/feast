@@ -6,12 +6,15 @@ import pyarrow
 import pytz
 from pydantic.typing import Literal
 
-from feast.data_source import DataSource, FileSource
+from feast import FileSource
+from feast.data_source import DataSource
 from feast.errors import FeastJoinKeysDuringMaterialization
 from feast.feature_view import FeatureView
 from feast.infra.offline_stores.offline_store import OfflineStore, RetrievalJob
-from feast.infra.provider import (
+from feast.infra.offline_stores.offline_utils import (
     DEFAULT_ENTITY_DF_EVENT_TIMESTAMP_COL,
+)
+from feast.infra.provider import (
     _get_requested_feature_views_to_features_dict,
     _run_field_mapping,
 )
@@ -232,6 +235,7 @@ class FileOfflineStore(OfflineStore):
             filesystem, path = FileSource.prepare_path(
                 data_source.path, data_source.file_options.s3_endpoint_override
             )
+            print("^^^^^^ line 239 in infera-> offline_store->file^^^^^^^^^^^^ path = ", str(path), " filesystem = ", str(filesystem))
             source_df = pd.read_parquet(path, filesystem=filesystem)
             # Make sure all timestamp fields are tz-aware. We default tz-naive fields to UTC
             source_df[event_timestamp_column] = source_df[event_timestamp_column].apply(
