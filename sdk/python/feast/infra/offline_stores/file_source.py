@@ -130,12 +130,10 @@ class FileSource(DataSource):
 
     @staticmethod
     def prepare_path(path: str, s3_endpoint_override: str):
-        print("^^^^^^^^^ prepare_path befor")
         if path.startswith("s3://"):
             s3 = fs.S3FileSystem(
                 endpoint_override=s3_endpoint_override if s3_endpoint_override else None
             )
-            print("^^^^^^^^^ endpoint_override ", str(s3_endpoint_override))
             return s3, path.replace("s3://", "")
         else:
             return None, path
